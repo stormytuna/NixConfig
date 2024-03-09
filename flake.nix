@@ -1,5 +1,5 @@
 {
-    description = "Test flake!";
+    description = "stormytuna's Flake";
 
     inputs = { 
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
@@ -15,13 +15,13 @@
         nixosConfigurations = {
             nixos = lib.nixosSystem {
                 system = "x86_64-linux";
-                modules = [ ./configuration.nix ];
+                modules = [ ./system/configuration.nix ];
             };
         };
         homeConfigurations = {
             stormytuna = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
-                modules = [ ./home.nix ];
+                modules = [ ./user/home.nix ];
             };
         };
     };
