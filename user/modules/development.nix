@@ -11,11 +11,4 @@
 
   # sublime text
   home.packages = with pkgs; [ sublime ];
-
-  # git cli
-  programs.git = {
-    enable = true;
-    userName = "stormytuna";
-    userEmail = "stormytuna@outlook.com";
-  };
 }
