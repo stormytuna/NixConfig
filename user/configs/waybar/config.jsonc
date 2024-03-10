@@ -1,0 +1,27 @@
+// -*- mode: jsonc -*-
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    // "width": 1280, // Waybar width
+    "spacing": 10, // Gaps between modules (4px)
+
+    // Module configs
+    "include": [ "~/.config/waybar/modules.jsonc" ],
+
+    "modules-left": [
+        //"custom/shutdown", // TODO: Make this button!
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        //"gamemode", // TODO: Set this up!
+        "bluetooth",
+        "pulseaudio",
+        //"pulseaudio/slider", TODO: Needs more setup, i think styling is fucked?
+        //"group/hardware", // TODO: Actually make this group! cpu, memory, disk, network, temperature
+        "clock"
+    ]
+}

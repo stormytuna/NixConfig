@@ -9,6 +9,9 @@
     ];
   };
 
+  # sublime text
+  home.packages = with pkgs; [ sublime ];
+
   # git cli
   programs.git = {
     enable = true;

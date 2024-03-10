@@ -20,7 +20,11 @@
 
   # dotfiles
   home.file = {
-    
+    ".config/hypr/hyprland.conf".source = ./configs/hyprland/hyprland.conf;
+    ".config/hypr/start.sh".source = ./configs/hyprland/start.sh;
+    ".config/waybar/config.jsonc".source = ./configs/waybar/config.jsonc;
+    ".config/waybar/modules.jsonc".source = ./configs/waybar/modules.jsonc;
+    ".config/waybar/style.css".source = ./configs/waybar/style.css;
   };
 
   # env vars

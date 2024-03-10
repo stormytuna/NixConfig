@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # import all our modules!
@@ -53,17 +53,36 @@
   #services.xserver.displayManager.sddm.enable = true;
 
   # using xfce currently as it works in a VM
-  services.xserver.desktopManager.xfce.enable = true;
+  #services.xserver.desktopManager.xfce.enable = true;
   
   # Hyprland, doesn't work in VMs :(
   services.xserver.enable = true; # might need this for xwayland
   services.xserver.layout = "gb";
   services.xserver.xkbVariant = "";
   environment.sessionVariables.NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland
+  environment.systemPackages = with pkgs; [ 
+    (waybar.overrideAttrs ( # override lets it work with workspaces properly
+      oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      }
+    ))
+    dunst # for notifications
+    libnotify
+    swww
+    kitty
+    # needed for hyprland but arent installed with it fsr?
+    bintools-unwrapped
+    pciutils
+    rofi-wayland
+    #wofi # can use instead of rofi-wayland
+  ];
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    #xwayland.enable = true;
   };
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
 
   # console keymap
   console.keyMap = "uk";

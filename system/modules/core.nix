@@ -11,5 +11,6 @@
     #xfce.thunar # TODO: Alternative? since i wanna use hyprland not xfce?
     firefox
     bitwarden
+    pavucontrol
   ];
 }
