@@ -3,12 +3,13 @@
 # init wallpaper daemon
 swww init &
 # set wallpaper image
-swww img ~/Pictures/Wallpapers/bridget-guilty-gear-01.png &
-
-#nm-applet --indicator &
+swww img ~/.config/hypr/wallpaper.png &
 
 # waybar
 waybar &
 
-#dunst
+# dunst
 dunst &
+
+# discord
+discord &

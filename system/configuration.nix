@@ -7,6 +7,9 @@
     ./modules/core.nix
     ./modules/gaming.nix
     ./modules/development.nix
+    ./modules/hyprland.nix
+    ./modules/sound.nix
+    ./modules/fonts.nix
   ];
     
   # bootloader, using grub as i have uefi, not bios
@@ -36,75 +39,15 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # Fonts
-  fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Inconsolata" ]; })
-    powerline
-    inconsolata
-    inconsolata-nerdfont
-    iosevka
-    font-awesome
-    ubuntu_font_family
-    terminus_font
-  ];
-
-  # login managers, sddm works better with hyprland
-  services.xserver.displayManager.lightdm.enable = true;
-  #services.xserver.displayManager.sddm.enable = true;
-
-  # using xfce currently as it works in a VM
-  #services.xserver.desktopManager.xfce.enable = true;
-  
-  # Hyprland, doesn't work in VMs :(
-  services.xserver.enable = true; # might need this for xwayland
-  services.xserver.layout = "gb";
-  services.xserver.xkbVariant = "";
-  environment.sessionVariables.NIXOS_OZONE_WL = "1"; # tells electron apps to use wayland
-  environment.systemPackages = with pkgs; [ 
-    (waybar.overrideAttrs ( # override lets it work with workspaces properly
-      oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      }
-    ))
-    dunst # for notifications
-    libnotify
-    swww
-    kitty
-    # needed for hyprland but arent installed with it fsr?
-    bintools-unwrapped
-    pciutils
-    rofi-wayland
-    #wofi # can use instead of rofi-wayland
-  ];
-  programs.hyprland = {
-    enable = true;
-    #xwayland.enable = true;
-  };
-
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+  # keyboard
+  services.xserver.xkb.layout = "gb";
+  services.xserver.xkb.variant = "";
 
   # console keymap
   console.keyMap = "uk";
 
   # printing
   services.printing.enable = true;
-
-  # sound
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   # users
   users.users.stormytuna = {
@@ -117,7 +60,7 @@
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "stormytuna";
 
-  # Allow unfree packages
+  # allow unfree + insecure (whatever that means) packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 

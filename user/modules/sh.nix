@@ -17,18 +17,82 @@
   };
 
   # fish, preferred shell
-		programs.fish = {
+	programs.fish = {
 		enable = true;
 		interactiveShellInit = ''
 			set fish_greeting # Disable greeting
+      set fish_prompt_pwd_dir_length 100 # Make prompt_pwd super long
+      neofetch
 		'';
+    shellAbbrs = {
+      code = "code --no-sandbox"; # without --no-sandbox flag it crashes immediatly after loading fsr
+    };
     shellAliases = {
-      rebuild-system = "sudo nixos-rebuild switch --flake ~/.dotfiles/#nixos";
-      rebuild-user = "home-manager switch --flake ~/.dotfiles/#stormytuna";
-      rebuild-all = "rebuild-system; rebuild-user";
+      # easy rebuilds
+      nrb-s = "sudo nixos-rebuild switch --flake ~/.dotfiles/#nixos";
+      nrb-u = "home-manager switch --flake ~/.dotfiles/#stormytuna";
+      nrb = "nrb-s; nrb-u";
+      cl = "clear; neofetch"; # i like neofetch okay it's not my fault
+      zz = "z -";
+      ls = "eza";
+      ll = "eza --long";
+      cat = "bat";
+      tree = "tre";
+      nano = "micro";
     };
 		plugins = with pkgs.fishPlugins; [
 			{ name = "grc"; src = grc.src; } # grc: colourised command output, package is installed in configuration.nix
+      { name = "bass"; src = bass.src; } # bass: utility for running bash scripts
 		];
+  };
+
+  # kitty, you can haz fish integration (wahh)
+  programs.kitty = {
+    theme = "Cherry";
+    keybindings = {
+      "ctrl+c" = "copy_or_interrupt";
+      "ctrl+v" = "paste_from_clipboard";
+    };
+    shellIntegration.enableFishIntegration = true;
+  };
+
+  # terminal packages
+  home.packages = with pkgs; [
+    grc # fish terminal command colouration
+    neofetch
+    killall
+    feh # image viewer
+    eza # better ls
+    bat # better cat
+    diff-so-fancy # better git diff
+    tre-command # better tree
+    micro # better nano
+    ripgrep # search within files
+    exiftool # metadata read/writer
+    fzf
+    speedtest-cli
+    ffmpeg
+    htop # process viewer
+    playerctl # play, pause, skip controls for media
+    imagemagick
+    screenfetch
+    steam-tui
+    # stuff for the funnies :3
+    cowsay
+    cmatrix
+    figlet
+    lolcat
+    asciiquarium
+  ];
+
+  # never thought id be configuring "thefuck" when i switched to linux but here we are...
+  programs.thefuck = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
   };
 }

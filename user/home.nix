@@ -1,11 +1,16 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, stylix, ... }:
 
+let
+  curWallpaper = "bridget";
+in
 {
   imports = [
     ./modules/core.nix
     ./modules/development.nix
     ./modules/gaming.nix
+    ./modules/hyprland.nix
     ./modules/sh.nix
+    ./modules/stylix.nix
   ];
 
   # allow unfree
@@ -14,17 +19,20 @@
     allowUnfreePredicate = (_: true);
   };
 
-  # user to manager (me! :D)
+  # user to manage (me! :D)
   home.username = "stormytuna";
   home.homeDirectory = "/home/stormytuna";
 
   # dotfiles
   home.file = {
-    ".config/hypr/hyprland.conf".source = ./configs/hyprland/hyprland.conf;
-    ".config/hypr/start.sh".source = ./configs/hyprland/start.sh;
+    ".config/hypr/hyprland.conf".source = ./configs/hypr/hyprland.conf;
+    ".config/hypr/start.sh".source = ./configs/hypr/start.sh;
+    ".config/hypr/wallpaper.png".source = ./themes/${curWallpaper}/wallpaper.png;
     ".config/waybar/config.jsonc".source = ./configs/waybar/config.jsonc;
     ".config/waybar/modules.jsonc".source = ./configs/waybar/modules.jsonc;
     ".config/waybar/style.css".source = ./configs/waybar/style.css;
+    ".config/nixpkgs/config.nix".source = ./configs/nixpkgs/config.nix;
+    ".config/fish/functions/fish_prompt.fish".source = ./configs/fish/fish_prompt.fish;
   };
 
   # env vars

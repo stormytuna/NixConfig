@@ -3,13 +3,9 @@
 {
   environment.systemPackages = with pkgs; [
     steam
-    steam-tui
     lutris
-    r2modman
-    (discord.override {
-      withVencord = true;
-    })
-    spotify
-    spotify-tui
   ];
+
+  # fix steam not loading properly
+  hardware.opengl.driSupport32Bit = true;
 }

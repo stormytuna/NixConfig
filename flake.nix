@@ -2,12 +2,13 @@
     description = "stormytuna's Flake";
 
     inputs = { 
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-        home-manager.url = "github:nix-community/home-manager/release-23.11";
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+        home-manager.url = "github:nix-community/home-manager";
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
+        stylix.url = "github:danth/stylix";
     };
     
-    outputs = { self, nixpkgs, home-manager, ... }:
+    outputs = { self, nixpkgs, home-manager, stylix, ... }:
     let
         lib = nixpkgs.lib;
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
@@ -21,7 +22,8 @@
         homeConfigurations = {
             stormytuna = home-manager.lib.homeManagerConfiguration {
                 inherit pkgs;
-                modules = [ ./user/home.nix ];
+                modules = [ ./user/home.nix stylix.homeManagerModules.stylix ];
+                extraSpecialArgs = { inherit stylix; };
             };
         };
     };

@@ -4,11 +4,17 @@
   # vscode
   programs.vscode = {
     enable = true;
-    extensions = [
-      pkgs.vscode-extensions.bbenoist.nix
+    extensions = with pkgs.vscode-extensions; [
+      bbenoist.nix
+      bmalehorn.vscode-fish
     ];
   };
 
-  # sublime text
-  home.packages = with pkgs; [ sublime ];
+  home.packages = with pkgs; [ 
+    sublime # TODO: Investigate alternatives, CLION is jetbrains vsc alternative i think?
+    jetbrains.rider
+    avalonia-ilspy
+    github-desktop
+    godot_4
+  ];
 }
