@@ -1,6 +1,36 @@
 { config, pkgs, ... }:
 
 {
+  # terminal packages
+  home.packages = with pkgs; [
+    grc # fish terminal command colouration
+    neofetch
+    killall
+    feh # image viewer
+    eza # better ls
+    bat # better cat
+    diff-so-fancy # better git diff
+    tre-command # better tree
+    micro # better nano
+    ripgrep # search within files
+    exiftool # metadata read/writer
+    fzf
+    speedtest-cli
+    ffmpeg
+    htop # process viewer
+    playerctl # play, pause, skip controls for media
+    imagemagick
+    screenfetch
+    cava
+    # stuff for the funnies :3
+    cowsay
+    cmatrix
+    figlet
+    lolcat
+    asciiquarium
+    btop
+  ];
+
   # bash
   programs.bash = {
     enable = true;
@@ -30,7 +60,7 @@
     shellAliases = {
       # easy rebuilds
       nrb-s = "sudo nixos-rebuild switch --flake ~/.dotfiles/#nixos";
-      nrb-u = "home-manager switch --flake ~/.dotfiles/#stormytuna";
+      nrb-u = "home-manager switch --flake ~/.dotfiles/#stormytuna; hyprctl reload";
       nrb = "nrb-s; nrb-u";
       cl = "clear; neofetch"; # i like neofetch okay it's not my fault
       zz = "z -";
@@ -39,6 +69,40 @@
       cat = "bat";
       tree = "tre";
       nano = "micro";
+      archfetch = "neofetch --source ~/Documents/AsciiArt/arch-logo";
+      refresh-wallpaper = "swww img ~/.config/hypr/wallpaper.png";
+    };
+    functions = {
+      change-theme = {
+        description = "Facilitates easy theme switching!";
+        argumentNames = [
+          "colour_scheme_name" "wallpaper_name"
+        ];
+        body = ''
+          # Prints usage
+          argparse h/help v/valid -- $argv
+          or return
+          if set -ql _flag_help
+            echo "change-theme <colour-scheme-name> <wallpaper-name>"
+            return 0
+          end
+
+          if set -ql _flag_valid
+            # Prints valid themes and wallpapers
+            echo "Available colour schemes:"
+            eza --oneline ~/.dotfiles/user/theming/colour-schemes
+            echo
+            echo "Available wallpapers:"
+            eza --oneline ~/.dotfiles/user/theming/wallpapers
+            return 0
+          end
+
+          sed -E -i "s/(colourScheme = \").+\";/\1$colour_scheme_name\";/" ~/.dotfiles/flake.nix
+          sed -E -i "s/(wallpaper = \").+\";/\1$wallpaper_name\";/" ~/.dotfiles/flake.nix
+          nrb-u
+          refresh-wallpaper
+        '';
+      };
     };
 		plugins = with pkgs.fishPlugins; [
 			{ name = "grc"; src = grc.src; } # grc: colourised command output, package is installed in configuration.nix
@@ -48,42 +112,17 @@
 
   # kitty, you can haz fish integration (wahh)
   programs.kitty = {
+    enable = true;
     theme = "Cherry";
+    settings = {
+      confirm_os_window_close = 0;
+    };
     keybindings = {
       "ctrl+c" = "copy_or_interrupt";
       "ctrl+v" = "paste_from_clipboard";
     };
     shellIntegration.enableFishIntegration = true;
   };
-
-  # terminal packages
-  home.packages = with pkgs; [
-    grc # fish terminal command colouration
-    neofetch
-    killall
-    feh # image viewer
-    eza # better ls
-    bat # better cat
-    diff-so-fancy # better git diff
-    tre-command # better tree
-    micro # better nano
-    ripgrep # search within files
-    exiftool # metadata read/writer
-    fzf
-    speedtest-cli
-    ffmpeg
-    htop # process viewer
-    playerctl # play, pause, skip controls for media
-    imagemagick
-    screenfetch
-    steam-tui
-    # stuff for the funnies :3
-    cowsay
-    cmatrix
-    figlet
-    lolcat
-    asciiquarium
-  ];
 
   # never thought id be configuring "thefuck" when i switched to linux but here we are...
   programs.thefuck = {

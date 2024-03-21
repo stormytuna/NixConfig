@@ -1,8 +1,5 @@
-{ config, pkgs, lib, stylix, ... }:
+{ config, pkgs, pkgs-stable, lib, stylix, settings, ... }:
 
-let
-  curWallpaper = "bridget";
-in
 {
   imports = [
     ./modules/core.nix
@@ -13,10 +10,13 @@ in
     ./modules/stylix.nix
   ];
 
-  # allow unfree
+  # allow unfree + insecure
   nixpkgs.config = {
     allowUnfree = true;
     allowUnfreePredicate = (_: true);
+    permittedInsecurePackages = [
+      "electron-25.9.0"
+    ];
   };
 
   # user to manage (me! :D)
@@ -26,13 +26,12 @@ in
   # dotfiles
   home.file = {
     ".config/hypr/hyprland.conf".source = ./configs/hypr/hyprland.conf;
-    ".config/hypr/start.sh".source = ./configs/hypr/start.sh;
-    ".config/hypr/wallpaper.png".source = ./themes/${curWallpaper}/wallpaper.png;
+    ".config/hypr/wallpaper.png".source = ./theming/wallpapers/${settings.wallpaper}.png;
     ".config/waybar/config.jsonc".source = ./configs/waybar/config.jsonc;
     ".config/waybar/modules.jsonc".source = ./configs/waybar/modules.jsonc;
-    ".config/waybar/style.css".source = ./configs/waybar/style.css;
     ".config/nixpkgs/config.nix".source = ./configs/nixpkgs/config.nix;
     ".config/fish/functions/fish_prompt.fish".source = ./configs/fish/fish_prompt.fish;
+    ".config/swaync/config.json".source = ./configs/swaync/config.json;
   };
 
   # env vars

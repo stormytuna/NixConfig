@@ -1,12 +1,18 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   home.packages = with pkgs; [
+    blueman
     aseprite
-    (discord.override {
-      withVencord = true;
-    })
+    vesktop
+    #(discord.override {
+    #  withVencord = true;
+    #})
     #discord
-    spotify
+    config.nur.repos.nltch.spotify-adblock
+    #spotify
+    premid
   ];
+
+  services.blueman-applet.enable = true;
 }

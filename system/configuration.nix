@@ -49,6 +49,13 @@
   # printing
   services.printing.enable = true;
 
+  # bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
+  # controllers
+  hardware.xpadneo.enable = true;
+
   # users
   users.users.stormytuna = {
     isNormalUser = true;

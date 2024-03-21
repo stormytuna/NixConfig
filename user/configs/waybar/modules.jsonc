@@ -1,57 +1,92 @@
 // -*- mode: jsonc -*-
 {
-	"hyprland/window": {
-		"format": "> {}",
+	"custom/shutdown": {
+		"exec": "echo ",
+		"format": "{} ",
+		"return-type": "",
+		"interval": "once",
+		"on-click": "wlogout"
+	},
+
+  "tray": {
+    "spacing": 5
+  },
+
+  "custom/notifications": {
+    "tooltip": false,
+    "format": "{}  ",
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+
+  "pulseaudio": {
+		"format": "{volume}% {icon}  {format_source}",
+		"format-bluetooth": "{volume}% {icon}  {format_source}",
+		"format-bluetooth-muted": "󰸈 {icon}  {format_source}",
+		"format-muted": "󰸈 {format_source}",
+		"format-source": "{volume}% ",
+		"format-source-muted": " ",
+		"format-icons": {
+		  "headphone": "",
+		  "hands-free": "",
+		  "headset": "",
+		  "phone": "",
+		  "portable": "",
+		  "car": "",
+		  "default": [ "", "", "" ]
+		},
+	  "scroll-step": 1,
+	  "on-click": "pavucontrol"
+	},
+
+  "bluetooth": {
+
+  },
+
+  "custom/waybar-mpris": {
+    "return-type": "json",
+    "exec": "waybar-mpris --position --autofocus",
+    "on-click": "waybar-mpris --send toggle",
+    "on-scroll-up": "waybar-mpris --send next",
+    "on-scroll-down": "waybar-mpris --send prev",
+    "escape": true
+  },
+
+  "hyprland/window": {
+		"format": "> {initialTitle}",
 		"separate-outputs": true
 	},
 
-    "hyprland/workspaces": {
-        "on-click": "activate",
-        "active-only": false,
-        "all-outputs": true,
-        "format": "{}",
-        "format-icons": {
-			"urgent": "",
-			"active": "",
-			"default": ""
-        }    
-    },
-
-	"bluetooth": {
-		"format": " {status}",
-		"format-disabled": "", // an empty format will hide the module
-		"format-connected": " {num_connections} connected",
-		"tooltip-format": "{controller_alias}\t{controller_address}",
-		"tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-		"tooltip-format-enumerate-connected": "{device_alias}\t{device_address}"
+	"cpu": {
+		"format": " {usage}%  ",
+    "interval": 15
 	},
 
-	"pulseaudio": {
-	    "format": "{volume}% {icon}",
-	    "format-bluetooth": "{volume}% {icon}",
-	    "format-muted": "",
-	    "format-icons": {
-	        "headphone": "",
-	        "hands-free": "",
-	        "headset": "",
-	        "phone": "",
-	        "portable": "",
-	        "car": "",
-	        "default": ["", ""]
-	    },
-	    "scroll-step": 1,
-	    "on-click": "pavucontrol"
+  "custom/gpu": {
+		"exec": "cat /sys/class/hwmon/hwmon8/device/gpu_busy_percent",
+		"format": " {}%  ",
+		"return-type": "",
+		"interval": 15
 	},
 
-	"pulseaudio/slider": {
-		"min": 0,
-		"max": 200,
-		"orientation": "horizontal"
+	"memory": {
+		"format": " {}%  ",
+    "interval": 15
 	},
+
+  "network": {
+    "format-ethernet": "{ipaddr} | {signalStrength}%  ",
+    "format-wireless": "{ipaddr} | {signalStrength}%  ",
+    "interval": 15
+  },
 
 	"clock": {
-	    "interval": 1,
-	    "format": "{:%H:%M:%S}",
-	    "max-length": 25
+	  "interval": 1,
+	  "format": "{:%d-%m-%Y %H:%M:%S}",
+	  "max-length": 25
 	}
 }

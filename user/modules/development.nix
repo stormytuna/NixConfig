@@ -8,6 +8,12 @@
       bbenoist.nix
       bmalehorn.vscode-fish
     ];
+    userSettings = {
+      "editor.tabSize" = 2;
+      "editor.insertSpaces" = true;
+      "editor.detectIndentation" = false;
+      "window.titleBarStyle" = "custom"; # Fix crashing with hyprland
+    };
   };
 
   home.packages = with pkgs; [ 

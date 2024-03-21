@@ -1,4 +1,6 @@
 function fish_prompt
+    set --global __fish_git_prompt_show_informative_status true
+
     set --global line_colour red
     set --global block_opener '🮤'
     set --global block_closer '🮥'
@@ -32,14 +34,12 @@ function fish_prompt
 
     # git TODO: Fix and improve this! ideally it would look like <git|branch|staged|unstaged>
     set -l git_prompt (fish_git_prompt '%s')
-    if test ! -z '$git_prompt'
-        _print_block git $git_prompt
-    end
+    test -n "$git_prompt"
+    and _print_block git $git_prompt
 
     # last command status
-    if test $status -ne 0
-        _print_block stat $status
-    end
+    test $status -ne 0
+    and _print_block stat $status
 
     set_color $line_colour
     echo -n '──'
