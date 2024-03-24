@@ -39,6 +39,10 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
+  # gpu driver
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   # keyboard
   services.xserver.xkb.layout = "gb";
   services.xserver.xkb.variant = "";
