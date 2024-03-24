@@ -16,7 +16,7 @@
     exiftool # metadata read/writer
     fzf
     speedtest-cli
-    ffmpeg
+    #ffmpeg
     htop # process viewer
     playerctl # play, pause, skip controls for media
     imagemagick
