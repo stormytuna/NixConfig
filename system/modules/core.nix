@@ -10,5 +10,6 @@
     firefox # TODO: Investigate alternatives, librefox, qutebrowser
     bitwarden
     pavucontrol
+    vulkan-tools
   ];
 }
