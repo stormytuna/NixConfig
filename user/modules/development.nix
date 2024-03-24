@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # vscode
@@ -11,7 +11,6 @@
     userSettings = {
       "editor.tabSize" = 2;
       "editor.insertSpaces" = true;
-      "editor.detectIndentation" = false;
       "window.titleBarStyle" = "custom"; # Fix crashing with hyprland
     };
   };
@@ -19,8 +18,10 @@
   home.packages = with pkgs; [ 
     sublime # TODO: Investigate alternatives, CLION is jetbrains vsc alternative i think?
     jetbrains.rider
+    msbuild
     avalonia-ilspy
     github-desktop
     godot_4
+    alejandra
   ];
 }

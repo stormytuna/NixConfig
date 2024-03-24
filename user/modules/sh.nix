@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-stable, ... }:
 
 {
   # terminal packages
@@ -22,13 +22,13 @@
     imagemagick
     screenfetch
     cava
+    btop
     # stuff for the funnies :3
     cowsay
     cmatrix
     figlet
     lolcat
     asciiquarium
-    btop
   ];
 
   # bash
@@ -103,6 +103,100 @@
           refresh-wallpaper
         '';
       };
+
+      system-rebuild = {
+        description = "Streamlines rebuilding the system config";
+        body = ''
+          z ~/.dotfiles
+
+          # early return if no changes were detected
+          git diff --quiet "flake.nix" "system/*"
+          if test $status -eq 0
+            echo "No changes found, exiting..."
+            z -
+            return 0
+          end
+
+          # autoformat nix files
+          alejandra "flake.nix" "system/*" &> /dev/null
+          if test $status -ne 0
+            echo "Failed to format .nix files!"
+            return 1
+          end
+
+          # print changes
+          git diff -U0 "flake.nix" "system/*"
+
+          echo "Rebuilding system..."
+
+          # rebuild, print logs if it failed
+          sudo nixos-rebuild switch --flake .#nixos &> system-rebuild.log
+          if test $status -ne 0
+            cat system-rebuild.log | grep --color error
+            return 1
+          end
+
+          # get current generation metadata
+          set current_gen = (nixos-rebuild list-generations --flake ~/.dotfiles | grep current)
+
+          # commit changes with current generation metadata
+          git add "flake.nix" "system/*"
+          git commit -m "$current_gen"
+
+          # go back to where we were
+          z -
+
+          # notification for all okay
+          notify-send -e "System rebuild OK!"
+        '';
+      };
+
+      user-rebuild = {
+        description = "Streamlines rebuilding the user config";
+        body = ''
+          z ~/.dotfiles
+
+          # early return if no changes were detected
+          git diff --quiet "flake.nix" "user/*"
+          if test $status -eq 0
+            echo "No changes found, exiting..."
+            z -
+            return 0
+          end
+
+          # autoformat nix files
+          alejandra "flake.nix" "user/*" &> /dev/null
+          if test $status -ne 0
+            echo "Failed to format .nix files!"
+            return 1
+          end
+
+          # print changes
+          git diff -U0 "flake.nix" "user/*"
+
+          echo "Rebuilding user..."
+
+          # rebuild, print logs if it failed
+          home-manager switch --flake .#stormytuna &> user-rebuild.log
+          if test $status -ne 0
+            cat user-rebuild.log | grep --color error
+            return 1
+          end
+
+          # get current generation metadata
+          set current_gen = (home-manager generations | head --lines 1)
+
+          # commit changes with current generation metadata
+          git add "flake.nix" "user/*"
+          git commit -m "$current_gen"
+
+          # go back to where we were
+          z -
+
+          # notification for all okay
+          notify-send -e "User rebuild OK!"
+        '';
+      };
     };
 		plugins = with pkgs.fishPlugins; [
 			{ name = "grc"; src = grc.src; } # grc: colourised command output, package is installed in configuration.nix
@@ -127,6 +221,7 @@
   # never thought id be configuring "thefuck" when i switched to linux but here we are...
   programs.thefuck = {
     enable = true;
+    package = pkgs-stable.thefuck;
     enableFishIntegration = true;
   };
 

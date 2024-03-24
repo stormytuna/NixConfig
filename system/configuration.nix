@@ -56,6 +56,8 @@
   # controllers
   hardware.xpadneo.enable = true;
 
+  # testing the new thingy!
+
   # users
   users.users.stormytuna = {
     isNormalUser = true;

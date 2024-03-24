@@ -47,19 +47,34 @@
 
   },
 
+  "hyprland/window": {
+		"format": "> {initialTitle}",
+		"separate-outputs": true
+	},
+
   "custom/waybar-mpris": {
     "return-type": "json",
-    "exec": "waybar-mpris --position --autofocus",
+    "exec": "waybar-mpris --position --autofocus --separator ' | '",
     "on-click": "waybar-mpris --send toggle",
     "on-scroll-up": "waybar-mpris --send next",
     "on-scroll-down": "waybar-mpris --send prev",
     "escape": true
   },
 
-  "hyprland/window": {
-		"format": "> {initialTitle}",
-		"separate-outputs": true
-	},
+  "mpris": {
+    "format": "{player_icon}  | {title} | {artist} ({position}/{length})",
+    "tooltip-format": "",
+    "player-icons": {
+      "default": "",
+      "firefox": "",
+      "spotify": ""
+    },
+    "status-icons": {
+      "paused": "",
+      "playing": ""
+    },
+    "interval": 1
+  },
 
 	"cpu": {
 		"format": " {usage}%  ",
@@ -79,8 +94,8 @@
 	},
 
   "network": {
-    "format-ethernet": "{ipaddr} | {signalStrength}%  ",
-    "format-wireless": "{ipaddr} | {signalStrength}%  ",
+    "format-ethernet": "{ipaddr}  | {bandwidthDownBytes}   {bandwidthUpBytes}  ",
+    "format-wireless": "{ipaddr}  | {bandwidthDownBytes}   {bandwidthUpBytes}  ",
     "interval": 15
   },
 

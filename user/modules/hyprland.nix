@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     #alacritty # TODO: wanna test this out after getting themes setup
     #mako # TODO: want to test mako out
+    pyprland
     swaynotificationcenter
     libnotify
     swww
@@ -19,7 +20,7 @@
 
   programs.waybar = {
     enable = true;
-    package = pkgs-stable.waybar;
+    #package = pkgs-stable.waybar;
     #package = (pkgs.waybar.overrideAttrs ( # override lets it work with workspaces properly
     #  oldAttrs: {
     #    mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
@@ -62,6 +63,7 @@
       #bluetooth,
       #window,
       #custom-waybar-mpris,
+      #mpris,
       #cpu,
       #custom-gpu,
       #memory,
@@ -103,8 +105,8 @@
       }
       
       #tray {
-        color: #'' + config.lib.stylix.colors.base0F +'';
-        border-color: #'' + config.lib.stylix.colors.base0F +'';
+        color: #'' + config.lib.stylix.colors.base09 +'';
+        border-color: #'' + config.lib.stylix.colors.base09 +'';
       }
 
       #tray > .passive {
@@ -121,47 +123,57 @@
       }
 
       #pulseaudio {
+        color: #'' + config.lib.stylix.colors.base0B + '';
+        border-color: #'' + config.lib.stylix.colors.base0B + '';
+      }
+
+      #bluetooth {
         color: #'' + config.lib.stylix.colors.base0C + '';
         border-color: #'' + config.lib.stylix.colors.base0C + '';
       }
 
-      #bluetooth {
-        color: #'' + config.lib.stylix.colors.base0D + '';
-        border-color: #'' + config.lib.stylix.colors.base0D + '';
-      }
-
       #window {
         border-radius: 0px 8px 8px 0px;
+        color: #'' + config.lib.stylix.colors.base0D + '';
+        border-color: #'' + config.lib.stylix.colors.base0D + '';
       }
 
       #custom-waybar-mpris {
         border-radius: 8px;
+        color: #'' + config.lib.stylix.colors.base0F + '';
+        border-color: #'' + config.lib.stylix.colors.base0F + '';
+      }
+
+      #mpris {
+        border-radius: 8px;
+        color: #'' + config.lib.stylix.colors.base0F + '';
+        border-color: #'' + config.lib.stylix.colors.base0F + '';
       }
 
       #cpu {
-        color: #'' + config.lib.stylix.colors.base0B + '';
-        border-color: #'' + config.lib.stylix.colors.base0B + '';
+        color: #'' + config.lib.stylix.colors.base0C + '';
+        border-color: #'' + config.lib.stylix.colors.base0C + '';
         border-radius: 8px 0px 0px 8px;
       }
 
       #custom-gpu {
-        color: #'' + config.lib.stylix.colors.base09 + '';
-        border-color: #'' + config.lib.stylix.colors.base09 + '';
+        color: #'' + config.lib.stylix.colors.base0B + '';
+        border-color: #'' + config.lib.stylix.colors.base0B + '';
       }
 
       #memory {
-        color: #'' + config.lib.stylix.colors.base0E + '';
-        border-color: #'' + config.lib.stylix.colors.base0E + '';
+        color: #'' + config.lib.stylix.colors.base0A + '';
+        border-color: #'' + config.lib.stylix.colors.base0A + '';
       }
 
       #network {
-        color: #'' + config.lib.stylix.colors.base0F +'';
-        border-color: #'' + config.lib.stylix.colors.base0F +'';
+        color: #'' + config.lib.stylix.colors.base09 +'';
+        border-color: #'' + config.lib.stylix.colors.base09 +'';
       }
 
       #clock {
-        color: #'' + config.lib.stylix.colors.base0D + '';
-        border-color: #'' + config.lib.stylix.colors.base0D + '';
+        color: #'' + config.lib.stylix.colors.base08 + '';
+        border-color: #'' + config.lib.stylix.colors.base08 + '';
         border-radius: 0px 8px 8px 0px;
       }
     '';
