@@ -7,6 +7,7 @@
     extensions = with pkgs.vscode-extensions; [
       bbenoist.nix
       bmalehorn.vscode-fish
+      ms-dotnettools.csharp
     ];
     userSettings = {
       "editor.tabSize" = 2;

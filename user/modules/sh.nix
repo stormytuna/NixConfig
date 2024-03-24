@@ -197,6 +197,14 @@
           notify-send -e "User rebuild OK!"
         '';
       };
+
+      # TODO: Finish this :3
+      #git-squash = {
+      #  description = "Squashes the past n commits into one commit with a given message";
+      #  body = ''
+      #    
+      #  '';
+      #}
     };
 		plugins = with pkgs.fishPlugins; [
 			{ name = "grc"; src = grc.src; } # grc: colourised command output, package is installed in configuration.nix
