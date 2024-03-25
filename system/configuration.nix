@@ -42,12 +42,12 @@
   # gpu driver
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
-  hardware.opengl.extraPackages = with pkgs; [
-    amdvlk
-  ];
-  hardware.opengl.extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
-  ];
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true; # fixes steam not working
+    extraPackages = with pkgs; [ amdvlk ];
+    extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+  };
 
   # keyboard
   services.xserver.xkb.layout = "gb";
