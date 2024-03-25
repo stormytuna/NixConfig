@@ -12,6 +12,7 @@
     config.nur.repos.nltch.spotify-adblock
     #spotify
     premid
+    unetbootin
   ];
 
   services.blueman-applet.enable = true;
